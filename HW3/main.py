@@ -38,16 +38,11 @@ def YCbCr420(img):
     Cb = img[:, :, 1]
     Cr = img[:, :, 2]
 
-    h = Y.shape[0]
-    w = Y.shape[1]
-    half_h = int(h / 2)
-    half_w = int(w / 2)
+    half_Cb = cv2.resize(Cb, dsize=None, fx=0.5, fy=0.5)
+    half_Cr = cv2.resize(Cr, dsize=None, fx=0.5, fy=0.5)
 
-    half_Cb = cv2.resize(Cb, (half_h, half_w))
-    half_Cr = cv2.resize(Cr, (half_h, half_w))
-
-    new_Cb = cv2.resize(half_Cb, (h, w))
-    new_Cr = cv2.resize(half_Cr, (h, w))
+    new_Cb = cv2.resize(half_Cb, dsize=Y.shape[::-1])
+    new_Cr = cv2.resize(half_Cr, dsize=Y.shape[::-1])
 
     img420 = np.copy(img)
     img420[:, :, 1] = new_Cb
@@ -60,13 +55,14 @@ def C420(img):
     ycbcr = RGB2YCbCr(img)
     ycbcr420 = YCbCr420(ycbcr)
     rgb = YCbCr2RGB(ycbcr420)
-    # no need to convert it back to BGR for some reason???
+    # no need to convert it back to BGR for some reasons?
     # bgr = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
 
     return rgb
 
 
 if __name__ == "__main__":
-    A = cv2.imread("color_gradient.png", cv2.COLOR_BGR2RGB)
+    A = cv2.imread("img1.png", cv2.COLOR_BGR2RGB)
+    cv2.imwrite("A1.png", A)
     B = C420(A)
-    cv2.imwrite("B.png", B)
+    cv2.imwrite("B1.png", B)
