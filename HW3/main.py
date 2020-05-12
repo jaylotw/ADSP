@@ -28,7 +28,7 @@ def YCbCr2RGB(img):
 
 def YCbCr420(img):
     """
-    keep only half the pixel in Cb and Cr using linear interpolation
+    keep only half the pixels in Cb and Cr using linear interpolation
     
     input: YCbCr
     
@@ -55,14 +55,18 @@ def C420(img):
     ycbcr = RGB2YCbCr(img)
     ycbcr420 = YCbCr420(ycbcr)
     rgb = YCbCr2RGB(ycbcr420)
-    # no need to convert it back to BGR for some reasons?
+    # no need to convert it back to BGR
     # bgr = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
 
     return rgb
 
 
 if __name__ == "__main__":
-    A = cv2.imread("img1.png", cv2.COLOR_BGR2RGB)
-    cv2.imwrite("A1.png", A)
+    A = cv2.imread("img.png", cv2.COLOR_BGR2RGB)
+
+    # save the original image
+    cv2.imwrite("A.png", A)
+    # compress the image with 4:2:0
     B = C420(A)
-    cv2.imwrite("B1.png", B)
+    # save the 4:2:0 image
+    cv2.imwrite("B.png", B)
