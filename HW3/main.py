@@ -20,10 +20,10 @@ def YCbCr2RGB(img):
     """
 
     rgb = np.matmul(img, [[1, 0, 1.402], [1, -0.344, -0.714], [1, 1.772, 0]])
-    rgb = rgb.round()
-    rgb_clip = np.clip(rgb, 0, 255)
+    # rgb = rgb.round()
+    # rgb_clip = np.clip(rgb, 0, 255)
 
-    return rgb_clip.astype(np.uint8)
+    return rgb.astype(np.uint8)
 
 
 def YCbCr420(img):
@@ -63,6 +63,7 @@ def C420(img):
 
 if __name__ == "__main__":
     A = cv2.imread("img.png", cv2.COLOR_BGR2RGB)
+    A = cv2.resize(A, dsize=None, fx=0.5, fy=0.5)
 
     # save the original image
     cv2.imwrite("A.png", A)
